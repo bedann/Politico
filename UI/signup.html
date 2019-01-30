@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/signup.css" />
+    <script src="js/main.js"></script>
+</head>
+<body>
+
+    <div class="main">
+
+        <div class="top">
+            
+            <h1 id="app-title">POLITICO!!</h1>
+            <br>
+            <p>Politico enables citizens to give their mandate<br>  to politicians running for different government offices while<br>  building trust in the process through transparency.</p>
+            <br> 
+
+            <div class="content">
+
+
+                    <div class="illustration">
+                    
+                        </div>
+
+                <div class="forms">
+                        <div class="tabset">
+                                <!-- Tab 1 -->
+                                <input type="radio" name="tabset" id="tab1" aria-controls="register" checked>
+                                <label for="tab1">REGISTER</label>
+                                <!-- Tab 2 -->
+                                <input type="radio" name="tabset" id="tab2" aria-controls="login">
+                                <label for="tab2">Login</label>
+                                
+                                <div class="tab-panels">
+                                  <section id="register" class="tab-panel">
+                                        <form>
+                                            <input type="text" name="firstname" placeholder="First name"><br>
+                                            <input type="text" name="lastname" placeholder="Last name"><br>
+                                            <input type="text" name="email" placeholder="Email"><br>
+                                            <input type="password" name="password" placeholder="Password (6 characters minimum)"><br>
+                                            <input type="password" name="confirm" placeholder="Confirm Password"><br>
+
+                                            <br>
+                                            <div class="radios">
+                                                <label>
+                                                    <input type="radio" name="role" value="voter"/> Voter
+                                                </label>&nbsp; &nbsp; &nbsp; &nbsp;
+                                                <label>
+                                                    <input type="radio" name="role" value="politician"/> Politician
+                                                </label>&nbsp; &nbsp; &nbsp; &nbsp;
+                                                <label>
+                                                    <input type="radio" name="role" value="admin"/> Admin
+                                                </label>
+                                            </div>
+                                            <br>
+                                            <input type="submit" value="REGISTER">
+                                        </form>
+                                </section>
+                                  
+                                </div>
+                                
+                              </div>
+                              
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    
+</body>
+</html>
