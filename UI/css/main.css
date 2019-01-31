@@ -5,6 +5,12 @@
     src: url("../fonts/RedStateBlueStateBB_bold.otf") format("opentype");
 }
 
+@font-face {
+    font-family: Politico;
+    font-weight: normal;
+    src: url("../fonts/RedStateBlueStateBB_reg.otf") format("opentype");
+}
+
 
 body {
     margin: 0;
@@ -16,6 +22,10 @@ body {
 .topnav {
     overflow: hidden;
     background-color: #112d32;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 23;
   }
   
   .topnav a {
@@ -117,4 +127,66 @@ body {
     border-radius: 15px;
     cursor: pointer;
     margin: 7.5px;
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/*CARDS*/
+
+.cards{
+    padding: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-x: scroll;
+    justify-content: center;
+}
+
+.icon-card{
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 16px;
+}
+
+.icon-card img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    margin: auto;
+    z-index: 1;
+    border: 3px solid white;
+}
+
+.icon-card-content{
+    min-height: 300px;
+    box-shadow: 1px 1px 5px 1px #8888888f;
+    margin-top: -50px;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    text-align: center;
+}
+
+
+.icon-card-title{
+    margin-top: 4em;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.icon-card-slogan{
+    margin-top: 2em;
+}
+
+.icon-card button{
+    margin-top: auto;
+    padding: 1em;
+    background-color: #6e6658;
+    color: white;
 }
