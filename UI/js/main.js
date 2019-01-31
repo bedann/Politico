@@ -60,6 +60,11 @@ realInput2.addEventListener('change', () => {
 });
 
 
+////
+function onVote(){
+    console.log('voted');
+}
+
 ////MODALS
 
 function closeModal(_id){

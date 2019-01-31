@@ -508,6 +508,8 @@ input[type=text],input[type=password], textarea, select {
     padding: 20px;
     width: 50%;
     background-color: white;
+    border-radius: 15px;
+    transition: height 1s ease-out;
 }
 
 /* The Close Button */
@@ -534,14 +536,40 @@ input[type=text],input[type=password], textarea, select {
 
 .candidate{
     display: flex;
+    max-height: 140px;
+    padding: 20px;
+    align-items: center;
 }
 
 .candidate img{
     height: 100px;
     width: 100px;
+    border-radius: 50px;
+    margin-right: 2em;
 }
 
 .candidate-details{
+    width: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: start;
+}
+
+.candidate-name{
+    font-size: 40px;
+}
+
+.candidate-position{
+    color: #6e6658;
+}
+.candidate-party{
+    color: #03A595;
+}
+
+.vote-button{
+    padding: 10px 30px;
+    background-color: #03A595;
+    border-radius: 10px;
+    color: #ffffff;
 }
