@@ -529,6 +529,10 @@ input[type=text],input[type=password], textarea, select {
 
 
 /*CANDIDATES*/
+.modal-content h2{
+    opacity: 0.6;
+    text-align: center;
+}
 .candidates{
     display: flex;
     flex-direction: column;
