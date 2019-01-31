@@ -614,3 +614,97 @@ input[type=text],input[type=password], textarea, select {
         font-size: 20px;
     }
 }
+
+
+/*PROFILE*/
+.main-profile{
+    display: flex;
+    padding: 2em;
+    width: 80%;
+    justify-content: center;
+    margin: auto;
+    height: 100vh;
+}
+.profile-info{
+    margin-right: 3em;
+    margin-top: 3em;
+    padding: 3em;
+    width: 20%;
+    background-color: #fff;
+    height: auto;
+    border-radius: 15px;
+}
+
+.profile-info img{
+    height: 150px;
+    width: 150px;
+    border-radius: 75px;
+    margin: auto;
+}
+
+.history{
+    margin-top: 3em;
+    background-color: #fff;
+    padding: 3em;
+    border-radius: 15px;
+    width: 80%;
+}
+
+.profile-body{
+    background-color: #eee;
+}
+
+.history h2{
+    opacity: 0.6;
+}
+
+.account-details{
+    width: 100%;
+    text-align: center;
+}
+
+.img-container{
+    margin: auto;
+    display: flex;
+    margin-bottom: 2em;
+}
+
+.profile-name{
+    font-size: 30px;
+}
+.profile-email{
+    color: #4f4a41;
+}
+.profile-logged{
+    opacity: 0.6;
+}
+
+#logout{
+    width: 100%;
+    background-color: rgb(224, 57, 57);
+    color: #fff;
+    padding: 15px 20px;
+    margin-top: 3em;
+    border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+    .main-profile{
+        flex-direction: column;
+        width: 100%;
+        padding: 0px;
+        padding-top: 2em;
+    }
+    .history{
+        margin-top: 1em;
+        padding: 1em;
+        width: 100%;
+    }
+    .profile-info{
+        margin: 0px;
+        width: 100%;
+        padding: 1em;
+        margin-top: 9em;
+    }
+
+}
