@@ -29,7 +29,7 @@
             <span>Openness . Transparency</span>
 
             <div class="offices">
-                <div class="office">
+                <div class="office" onclick="showModal('vote-modal')">
                     Governor
                 </div>
                 <div class="office">
@@ -125,6 +125,24 @@
         </div>
 
       </div>
+
+
+    <div id="vote-modal" class="modal" onclick="this.style.display='none'">
+        <span class="close" onclick="closeModal('vote-modal')">&times;</span>
+        <div class="modal-content">
+            <div class="candidates">
+                <div class="candidate">
+                    <img src="images/samples/user1.jpg"/>
+                    <div class="candidate-details">
+                        <span class="candidate-name">JAMES MATHENGE MBUGUA</span>
+                        <span class="candidate-position">Governor</span>
+                        <span class="candidate-party">ORANGE DEMOCRATIC Party (ODM)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
 
 </body>

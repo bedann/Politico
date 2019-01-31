@@ -58,3 +58,15 @@ realInput2.addEventListener('change', () => {
   
   fileInfo2.innerHTML = truncated;
 });
+
+
+////MODALS
+
+function closeModal(_id){
+    document.getElementById(_id).style.display='none';
+}
+
+
+function showModal(modal_id){
+    document.getElementById(modal_id).style.display='block';
+}
