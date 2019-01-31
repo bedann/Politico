@@ -15,7 +15,7 @@ body {
 */
 .topnav {
     overflow: hidden;
-    background-color: #333;
+    background-color: #112d32;
   }
   
   .topnav a {
@@ -71,4 +71,50 @@ body {
   /**/
 
 
-  
+  .page-header{
+      min-height: 50vh;
+      background-color: #254e58ef;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: #A6D0CE;
+  }
+
+  .page-header::before{
+      background-image: url('../images/2.jpg');
+      background-size: cover;
+      background-position: center;
+      content: "";
+      display: block;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      z-index: -2;
+      opacity: 1;
+      min-height: 50vh;
+      max-height: 50vh;
+  }
+
+  .page-header h1{
+      font-size: 90px;
+  }
+
+  .page-header span{
+    font-size: 30px;
+    color: white;
+}
+
+.offices{
+    display: flex;
+    margin-top: 2em;
+    flex-wrap: wrap;
+}
+
+.office{
+    padding: 8px 16px;
+    border: 3px solid #88bdbc;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 7.5px;
+}
