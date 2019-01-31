@@ -231,6 +231,18 @@ body {
     padding: 5px;
 }
 
+.office-row span{
+    margin-right: 35%;
+}
+
+.office-row button{
+    padding: 5px 10px;
+    background-color: #6e6658;
+    border-radius: 5px;
+    color: white;
+    min-width: 100px;
+}
+
 .actions{
     margin-top: 1em;
 }
@@ -258,6 +270,10 @@ body {
     .offices-vert{
         margin-top: 0px;
         margin-bottom: 0px;
+    }
+
+    .office-row span{
+        margin-right: 31%;
     }
 }
 
