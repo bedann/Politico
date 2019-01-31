@@ -679,6 +679,15 @@ input[type=text],input[type=password], textarea, select {
     opacity: 0.6;
 }
 
+#logout{
+    width: 100%;
+    background-color: rgb(224, 57, 57);
+    color: #fff;
+    padding: 15px 20px;
+    margin-top: 3em;
+    border-radius: 10px;
+}
+
 @media (max-width: 600px) {
     .main-profile{
         flex-direction: column;
