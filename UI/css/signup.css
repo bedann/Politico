@@ -54,6 +54,18 @@
     width: 50%;
 }
 
+#login div{ 
+    width: 100%;
+    text-align: center;
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#login a{
+    color: #88bdbc;
+}
+
 /*
     INPUTS
 */
