@@ -19,6 +19,10 @@ function showNav() {
     }
   }
 
+  function showParty(){
+      window.location = 'party-detail.html'
+  }
+
 
 const uploadButton = document.querySelector('.browse-btn');
 const fileInfo = document.querySelector('.file-info');

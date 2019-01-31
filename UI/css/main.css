@@ -131,6 +131,24 @@ body {
     }
   }
 
+  .page-header-detail{
+      flex-direction: row;
+      justify-content: start;
+      padding-left: 4em;
+      align-items: center;
+  }
+
+  .page-header-detail h1{
+    font-size: 60px;
+}
+
+#party-icon{
+    height: 200px;
+    width: 200px;
+    border-radius: 50px;
+    margin-right: 3em;
+}
+
 .offices{
     display: flex;
     margin-top: 2em;
