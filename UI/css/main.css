@@ -351,7 +351,7 @@ input[type=text],input[type=password], textarea, select {
   }
   
   .container input:checked ~ .checkmark {
-    background-color: #2196F3;
+    background-color: #03A595;
   }
   
   .checkmark:after {
