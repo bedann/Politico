@@ -139,7 +139,11 @@ body {
   }
 
   .page-header-detail h1{
-    font-size: 60px;
+    font-size: 40px;
+}
+
+.info span{
+    font-size: 20px;
 }
 
 #party-icon{
@@ -173,6 +177,21 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
+}
+
+.bottom-layout{
+    display: flex;
+
+}
+
+.offices-vert{
+    min-width: 20%;
+    margin: 2em;
+    padding: 1em;
+}
+
+.office-row{
+    padding: 5px;
 }
 
 /*CARDS*/
@@ -218,6 +237,11 @@ body {
     margin-top: 4em;
     font-size: 20px;
     font-weight: bold;
+}
+
+.icon-card-subtitle{
+    font-size: 17px;
+    opacity: 0.5;
 }
 
 .icon-card-slogan{
