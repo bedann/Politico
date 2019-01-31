@@ -205,7 +205,7 @@ body {
     margin: 7.5px;
 }
 
-.office:hover{
+.office:hover, .focused{
     background-color: #88bdbc;
     color: white;
 }
@@ -706,5 +706,27 @@ input[type=text],input[type=password], textarea, select {
         padding: 1em;
         margin-top: 9em;
     }
+
+}
+
+/*RESULTS*/
+.winners img{
+    height: 150px;
+    width: 150px;
+    border-radius: 75px;
+    margin: auto;
+}
+
+.winners{
+    margin-top: 5em;
+    margin-bottom: 2em;
+}
+#winner-party{
+    color: #6e6658;
+}
+#winner-pos{
+    opacity: 0.5;
+}
+#winner-user{
 
 }
