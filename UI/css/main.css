@@ -692,14 +692,19 @@ input[type=text],input[type=password], textarea, select {
     .main-profile{
         flex-direction: column;
         width: 100%;
+        padding: 0px;
+        padding-top: 2em;
     }
     .history{
         margin-top: 1em;
         padding: 1em;
+        width: 100%;
     }
     .profile-info{
-        margin-right: 0px;
+        margin: 0px;
         width: 100%;
+        padding: 1em;
+        margin-top: 9em;
     }
 
 }
