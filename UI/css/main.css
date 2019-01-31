@@ -212,3 +212,104 @@ body {
     background-color: #6e6658;
     color: white;
 }
+
+
+/*//////FORMS*/
+.forms{
+    margin: auto;
+    width: 50%;
+}
+
+
+@media screen and (max-width: 600px) {
+    .forms{
+        width: 80%;
+    }
+  }
+
+.main-forms{
+    align-items: center;
+    min-height: 100vh;
+}
+
+.main-forms h1{
+    color: black;
+}
+
+.input-container {
+    margin-top: 15px;
+    max-width: 100%;
+    background-color: #EDEDED;
+    border: 1px solid #DFDFDF;
+    border-radius: 5px;
+  }
+
+  .last-input{
+      margin-bottom: 20px;
+  }
+
+  
+  input[type='file'] {
+    display: none;
+  }
+  
+  .file-info {
+    font-size: 0.9em;
+  }
+  
+  .browse-btn, .browse-btn2 {
+    background: #03A595;
+    color: #fff;
+    min-height: 35px;
+    padding: 10px;
+    border: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  
+  .browse-btn:hover,.browse-btn2:hover {
+    background: #4ec0b4;
+  }
+  
+  @media (max-width: 300px) {
+    button {
+      width: 100%;
+      border-top-right-radius: 5px;
+      border-bottom-left-radius: 0;
+    }
+    
+    .file-info {
+      display: block;
+      margin: 10px 5px;
+    }
+  }
+
+
+/*
+    INPUTS
+*/
+input[type=text],input[type=password], textarea, select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  input[type=submit] {
+    background-color: #254e58;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+    width: 100%;
+  }
+
+  .radios{
+      display: flex;
+      justify-content: center;
+  }
