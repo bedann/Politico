@@ -8,3 +8,12 @@ function switchTab(tab,group){
     document.getElementById(tab).style.opacity = 1;
     document.getElementById(tab).style.display = "block";
 }
+
+function showNav() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
+  }
