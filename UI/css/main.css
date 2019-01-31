@@ -194,6 +194,25 @@ body {
     padding: 5px;
 }
 
+.actions{
+    margin-top: 1em;
+}
+
+.actions button{
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.edit{
+    border: #03A595 2px solid;
+    background-color: white;
+}
+
+.delete-btn{
+    background-color: rgba(211, 64, 64, 0.9);
+    color: white;
+}
+
 /*CARDS*/
 
 .cards{
