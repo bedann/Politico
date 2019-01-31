@@ -500,3 +500,117 @@ input[type=text],input[type=password], textarea, select {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
+
+
+  /*MODALS*/
+
+  .modal {
+    display: none; 
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    margin: auto;
+    padding: 20px;
+    width: 50%;
+    background-color: white;
+    border-radius: 15px;
+    transition: height 1s ease-out;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/*CANDIDATES*/
+.modal-content h2{
+    opacity: 0.6;
+    text-align: center;
+}
+.candidates{
+    display: flex;
+    flex-direction: column;
+}
+
+.candidate{
+    display: flex;
+    max-height: 140px;
+    padding: 20px;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.candidate img{
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+    margin-right: 2em;
+}
+
+.candidate-details{
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.candidate-name{
+    font-size: 40px;
+}
+
+.candidate-position{
+    color: #6e6658;
+}
+.candidate-party{
+    color: #03A595;
+}
+
+.vote-button{
+    padding: 10px 30px;
+    background-color: #03A595;
+    border-radius: 10px;
+    color: #ffffff;
+}
+
+
+@media (max-width: 600px) {
+    .modal-content{
+        width: 85%;
+        padding: 1em;
+    }
+    .candidate img{
+        height: 60px;
+        width: 60px;
+        border-radius: 30px;
+        margin-right: 1em;
+    }
+    .candidate{
+        padding: 5px;
+    }
+    .candidate-name{
+        font-size: 20px;
+    }
+}
