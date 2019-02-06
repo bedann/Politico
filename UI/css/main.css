@@ -275,6 +275,7 @@ body {
     .office-row span{
         margin-right: 31%;
     }
+
 }
 
 /*CARDS*/
@@ -562,7 +563,7 @@ input[type=text],input[type=password], textarea, select {
     margin-bottom: 1em;
 }
 
-.candidate img{
+.candidate img:not(.win-icon){
     height: 100px;
     width: 100px;
     border-radius: 50px;
@@ -601,12 +602,13 @@ input[type=text],input[type=password], textarea, select {
         width: 85%;
         padding: 1em;
     }
-    .candidate img{
+    .candidate img:not(.win-icon){
         height: 60px;
         width: 60px;
         border-radius: 30px;
         margin-right: 1em;
     }
+
     .candidate{
         padding: 5px;
     }
@@ -623,7 +625,7 @@ input[type=text],input[type=password], textarea, select {
     width: 80%;
     justify-content: center;
     margin: auto;
-    height: 100vh;
+    height: auto;
 }
 .profile-info{
     margin-right: 3em;
@@ -631,7 +633,7 @@ input[type=text],input[type=password], textarea, select {
     padding: 3em;
     width: 20%;
     background-color: #fff;
-    height: auto;
+    height: 40vh;
     border-radius: 15px;
 }
 
@@ -647,6 +649,7 @@ input[type=text],input[type=password], textarea, select {
     background-color: #fff;
     padding: 3em;
     border-radius: 15px;
+    height: auto;
     width: 80%;
 }
 
@@ -679,6 +682,10 @@ input[type=text],input[type=password], textarea, select {
     opacity: 0.6;
 }
 
+.win-icon{
+    height: 50px;
+}
+
 #logout{
     width: 100%;
     background-color: rgb(224, 57, 57);
@@ -691,9 +698,11 @@ input[type=text],input[type=password], textarea, select {
 @media (max-width: 600px) {
     .main-profile{
         flex-direction: column;
-        width: 100%;
+        width: 90%;
         padding: 0px;
         padding-top: 2em;
+        justify-content: center;
+        align-items: center;
     }
     .history{
         margin-top: 1em;
@@ -704,9 +713,13 @@ input[type=text],input[type=password], textarea, select {
         margin: 0px;
         width: 100%;
         padding: 1em;
-        margin-top: 9em;
+        margin-top: 2em;
+        height: auto;
     }
 
+    .win-icon{
+        height: 30px;
+    }
 }
 
 /*RESULTS*/

@@ -43,6 +43,7 @@
 
 .forms{
     width: 50%;
+    overflow-y: scroll;
 }
 
 .illustration{
