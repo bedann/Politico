@@ -346,6 +346,9 @@ body {
     width: 50%;
 }
 
+.forms select, option{
+    padding: 10px;
+}
 
 @media screen and (max-width: 600px) {
     .forms{
