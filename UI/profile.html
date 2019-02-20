@@ -8,8 +8,13 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
 </head>
 <body class="profile-body">
+
+        <script>
+            var token = get_token();
+        </script>
 
         <div class="topnav inprofile" id="myTopnav">
                 <a href="index.html" class="active app-name"><i class="fa fa-home"></i>  POLITICO</a>
@@ -28,14 +33,14 @@
                             <img src="images/samples/user1.png"/>
                     </div>
                     <div class="account-details">
-                            <span class="profile-name">Bedan Kimani</span>
+                            <span class="profile-name" id="username">User's Username</span>
                             <br>
                             <br>
-                            <span class="profile-email">bedank6@gmail.com</span>
+                            <span class="profile-email" id="email">bedank6@gmail.com</span>
                             <br>
-                            <span class="profile-logged">Since Jan 2018</span>
+                            <span class="profile-logged" id="phone">Since Jan 2018</span>
                     </div>
-                    <button id="logout" onclick="location.href = 'signup.html'">LOG OUT</button>
+                    <button id="logout" onclick="on_logout();">LOG OUT</button>
                 </div>
 
                 <div class="history">
@@ -107,6 +112,10 @@
                 </div>
                 
               </div>
+
+              <script>
+                  loadUserProfile();
+              </script>
     
 </body>
 </html>
