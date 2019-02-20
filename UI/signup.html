@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/signup.css" />
     <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
 </head>
 <body>
 
@@ -61,15 +62,15 @@
                                         </form>
                                 </section>
                                 <section id="login" class="tab-panel">
-                                        <form action="index.html">
-                                                <input type="text" name="email" placeholder="Email"><br>
-                                                <input type="password" name="password" placeholder="Password (6 characters minimum)"><br>
+                                        <form onsubmit="onLogin(); return false;">
+                                                <input id="login_email" type="text" name="email" placeholder="Email" ><br>
+                                                <input id="login_password" type="password" name="password" placeholder="Password (6 characters minimum)"><br>
                                                 <br>
                                                 <br>
                                                 <input type="submit" value="LOGIN" >
                                             </form>
                                             <br>
-                                            <div><a href="#">Forgot password?</a></div>
+                                            <div><a href="#" onclick="onResetPassword();">Forgot password?</a></div>
                                 </section>
                                 </div>
                                 
@@ -81,6 +82,12 @@
         </div>
 
 
+    </div>
+
+    <div id="load-modal" class="modal">
+        <div class="load-container">
+            <div class="loader"></div>
+        </div>
     </div>
     
 </body>
