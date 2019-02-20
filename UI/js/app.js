@@ -138,6 +138,7 @@ function onSignup() {
     .then((data) => {
         loader.style.display = 'none';
 
+        console.log(data);
         if (data.status === 201) {
             var user = data.data[0].user
 
