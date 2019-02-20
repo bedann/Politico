@@ -231,16 +231,20 @@ body {
     padding: 5px;
 }
 
-.office-row span{
-    margin-right: 35%;
-}
-
 .office-row button{
     padding: 5px 10px;
     background-color: #6e6658;
     border-radius: 5px;
     color: white;
-    min-width: 100px;
+    min-width: 80px;
+}
+
+.office-row .office-name{
+    width: 100%;
+}
+
+.office-content{
+    display: flex;
 }
 
 .actions{
