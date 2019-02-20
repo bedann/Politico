@@ -113,3 +113,42 @@ function on_logout(){
     localStorage.clear();
     window.location.replace('signup.html')
 }
+
+
+
+/**
+ * HOME PAGE
+ */
+function initHomePage(){
+    loadOffices();
+}
+
+
+function loadOffices() {
+
+    fetch(`${BASE_URL}/offices`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+
+        if (data.status === 200) {
+
+            data.data.forEach(function(office){
+                
+            });
+
+        }else {
+            window.alert(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        window.alert(error);
+    });
+}
