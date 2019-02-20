@@ -38,25 +38,20 @@
                                 
                                 <div class="tab-panels">
                                   <section id="register" class="tab-panel">
-                                        <form action="index.html">
-                                            <input type="text" name="firstname" placeholder="First name"><br>
-                                            <input type="text" name="lastname" placeholder="Last name"><br>
-                                            <input type="text" name="email" placeholder="Email"><br>
-                                            <input type="password" name="password" placeholder="Password (6 characters minimum)"><br>
-                                            <input type="password" name="confirm" placeholder="Confirm Password"><br>
+                                        <form onsubmit="onSignup();" class="register-form">
+                                            <input id="firstname" class="double-form" type="text" name="firstname" placeholder="First name"><br>
+                                            <span class="spacer"></span>
+                                            <input id="lastname" class="double-form" type="text" name="lastname" placeholder="Last name"><br>
+                                            <input id="othername" class="double-form" type="text" name="othername" placeholder="Other name"><br>
+                                            <span class="spacer"></span>
+                                            <input id="phoneNumber" class="double-form" type="text" name="phone" placeholder="Phone Number"><br>
+                                            <input id="passportUrl" type="text" name="passportUrl" placeholder="Passport Url"><br>
+                                            <input id="email" type="text" name="email" placeholder="Email"><br>
+                                            <input id="password" class="double-form" type="password" name="password" placeholder="Password (6 characters minimum)"><br>
+                                            <span class="spacer"></span>
+                                            <input id="confirm" class="double-form" type="password" name="confirm" placeholder="Confirm Password"><br>
 
                                             <br>
-                                            <div class="radios">
-                                                <label>
-                                                    <input type="radio" name="role" value="voter"/> Voter
-                                                </label>&nbsp; &nbsp; &nbsp; &nbsp;
-                                                <label>
-                                                    <input type="radio" name="role" value="politician"/> Politician
-                                                </label>&nbsp; &nbsp; &nbsp; &nbsp;
-                                                <label>
-                                                    <input type="radio" name="role" value="admin"/> Admin
-                                                </label>
-                                            </div>
                                             <br>
                                             <input type="submit" value="REGISTER">
                                         </form>

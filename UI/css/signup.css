@@ -215,7 +215,33 @@ input[type=text],input[type=password], select {
   height: 100%; 
 }
 
+
+.register-form{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.register-form .double-form{
+  flex-basis: 45%;
+  flex-grow: 1;
+}
+
+.spacer{
+  min-width: 16px;
+}
+
   @media(max-width:600px){
+
+    .spacer{
+      display: none;
+    }
+
+      .register-form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
       .top{
           width: 90%;
       }
