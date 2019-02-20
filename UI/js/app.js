@@ -81,6 +81,9 @@ function onLogin() {
 }
 
 
+/**
+ * Password reset function
+ */
 function onResetPassword() {
     loader = document.getElementById('load-modal');
     loader.style.display = 'block';
@@ -115,6 +118,69 @@ function onResetPassword() {
 }
 
 
+/**
+ * Signup function
+ */
+function onSignup() {
+    password = document.getElementById('password').value
+    confirm_password = document.getElementById('confirm').value
+
+    if (password !== confirm_password){
+        window.alert('Passwords do not match');
+        return;
+    }
+
+    loader = document.getElementById('load-modal');
+    loader.style.display = 'block';
+
+    let payload = {
+        firstname: document.getElementById('firstname').value,
+        lastname: document.getElementById('lastname').value,
+        othername: document.getElementById('othername').value,
+        phoneNumber: document.getElementById('phoneNumber').value,
+        passportUrl: document.getElementById('passportUrl').value,
+        isAdmin: false,
+        email: document.getElementById('email').value,
+        password: password,
+    }
+
+    fetch(`${BASE_URL}/auth/signup`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+    })
+    .then(res => res.json())
+    .then((data) => {
+        loader.style.display = 'none';
+
+        console.log(data);
+        if (data.status === 201) {
+            var user = data.data[0].user
+
+            // Save user profile to local storage
+            localStorage.setItem('token', data.data[0].token);
+            localStorage.setItem('firstname', user.firstname);
+            localStorage.setItem('lastname', user.lastname);
+            localStorage.setItem('email', user.email);
+            localStorage.setItem('phone', user.phonenumber);
+            // Redirect to homepage after successful login
+            window.location.replace('index.html');
+
+        }else {
+            window.alert(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        loader.style.display = 'none';
+        window.alert(error);
+    });
+}
+
+
 /** 
 * PROFILE PAGE
 */
@@ -130,7 +196,6 @@ function on_logout(){
     localStorage.clear();
     window.location.replace('signup.html')
 }
-
 
 
 /**
