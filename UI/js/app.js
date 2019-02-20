@@ -16,7 +16,24 @@ function getToken(){
     return null
 }
 
+function createNode(type, id, clazz){
+    const node = document.createElement(type);
+    node.classList.add(clazz);
+    node.id = id;
+    return node;
+}
 
+function showModal(modal_id){
+    document.getElementById(modal_id).style.display='block';
+}
+
+function tokenError(status){
+    if(status === 401){
+        window.location.replace('signup.html')
+        return true;
+    }
+    return false;
+}
 
 /**
  * Login function
@@ -135,13 +152,72 @@ function loadOffices() {
     })
     .then(res => res.json())
     .then((data) => {
-
+        
         if (data.status === 200) {
 
+            offices = document.getElementById('office-list');
+
             data.data.forEach(function(office){
-                
+
+                let office_node = createNode('div', office.id, 'office');
+                office_node.innerText = office.name
+                office_node.addEventListener('click', function(){
+                    showModal('vote-modal');
+                });
+                offices.appendChild(office_node);
+
             });
 
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            window.alert(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        window.alert(error);
+    });
+}
+
+
+
+function loadOfficesInPartyDetail() {
+
+    fetch(`${BASE_URL}/offices`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        
+        if (data.status === 200) {
+
+            offices = document.getElementById('offices-vert');
+
+            data.data.forEach(function(office){
+
+                let office_node = createNode('div', `office-${office.id}-container`, 'office-row');
+                office_node.innerHTML = `
+                <div class="office-content">
+                    <div class="office-name"> &nbsp; ${office.name}</div>
+                    <button id="${office.id}">VIE</button>
+                </div>
+                <hr>
+                `
+                office_node.addEventListener('click', function(){
+                    showModal('vote-modal');
+                });
+                offices.appendChild(office_node);
+
+            });
+
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
         }else {
             window.alert(data.error);
             console.log(data.status);
