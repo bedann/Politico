@@ -8,7 +8,7 @@
  */
 const BASE_URL = 'https://kurayangu.herokuapp.com/api/v2';
 
-function get_token(){
+function getToken(){
     token = localStorage.getItem('token');
     if(token)
         return token;
@@ -21,7 +21,7 @@ function get_token(){
 /**
  * Login function
  */
-function on_login() {
+function onLogin() {
     loader = document.getElementById('load-modal');
     loader.style.display = 'block';
 
@@ -63,6 +63,39 @@ function on_login() {
     });
 }
 
+
+function onResetPassword() {
+    loader = document.getElementById('load-modal');
+    loader.style.display = 'block';
+
+    fetch(`${BASE_URL}/auth/reset`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: document.getElementById('login_email').value
+        }),
+    })
+    .then(res => res.json())
+    .then((data) => {
+        loader.style.display = 'none';
+
+        if (data.status === 200) {
+
+            window.alert(data.data[0].message);
+
+        }else {
+            window.alert(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        loader.style.display = 'none';
+        window.alert(error);
+    });
+}
 
 
 /** 
