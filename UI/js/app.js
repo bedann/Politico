@@ -138,7 +138,7 @@ function onSignup() {
     .then((data) => {
         loader.style.display = 'none';
 
-        if (data.status === 200) {
+        if (data.status === 201) {
             var user = data.data[0].user
 
             // Save user profile to local storage
