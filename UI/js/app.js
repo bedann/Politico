@@ -35,6 +35,18 @@ function tokenError(status){
     return false;
 }
 
+function displayError(msg){
+    document.getElementById('snackbar').innerText = msg
+    showSnackbar();
+}
+
+function showSnackbar() {
+    var x = document.getElementById("snackbar");
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+  }
+
+
 /**
  * Login function
  */
@@ -69,14 +81,14 @@ function onLogin() {
             window.location.replace('index.html');
 
         }else {
-            window.alert(data.error);
+            displayError(data.error)
             console.log(data.status);
-        }
+        }   
 
     })
     .catch((error) => {
         loader.style.display = 'none';
-        window.alert(error);
+        displayError('Please check your connection')
     });
 }
 
@@ -126,7 +138,7 @@ function onSignup() {
     confirm_password = document.getElementById('confirm').value
 
     if (password !== confirm_password){
-        window.alert('Passwords do not match');
+        displayError('Passwords do not match')
         return;
     }
 
@@ -169,14 +181,14 @@ function onSignup() {
             window.location.replace('index.html');
 
         }else {
-            window.alert(data.error);
+            displayError(data.error)
             console.log(data.status);
         }
 
     })
     .catch((error) => {
         loader.style.display = 'none';
-        window.alert(error);
+        displayError('Please check your connection')
     });
 }
 
@@ -293,3 +305,5 @@ function loadOfficesInPartyDetail() {
         window.alert(error);
     });
 }
+
+

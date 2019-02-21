@@ -39,6 +39,7 @@
                                 <div class="tab-panels">
                                   <section id="register" class="tab-panel">
                                         <form onsubmit="onSignup(); return false;" class="register-form">
+                                            <h6 id="register-alert" class="error-message"></h1>
                                             <input id="firstname" class="double-form" type="text" name="firstname" placeholder="First name"><br>
                                             <span class="spacer"></span>
                                             <input id="lastname" class="double-form" type="text" name="lastname" placeholder="Last name"><br>
@@ -58,6 +59,7 @@
                                 </section>
                                 <section id="login" class="tab-panel">
                                         <form onsubmit="onLogin(); return false;">
+                                                <h6 id="login-alert" class="error-message"></h1>
                                                 <input id="login_email" type="text" name="email" placeholder="Email" ><br>
                                                 <input id="login_password" type="password" name="password" placeholder="Password (6 characters minimum)"><br>
                                                 <br>
@@ -84,6 +86,8 @@
             <div class="loader"></div>
         </div>
     </div>
+
+    <div id="snackbar">Some text some message..</div>
     
 </body>
 </html>
