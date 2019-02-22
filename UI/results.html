@@ -14,14 +14,15 @@
     <div class="topnav" id="myTopnav">
             <a href="index.html" class="active app-name"><i class="fa fa-home"></i>  POLITICO</a>
             <a href="profile.html"><i class="fa fa-user"></i>  My Profile</a>
-            <a href="create-party.html"><i class="fa fa-plus"></i>  New Party</a>
+            <a id="new-office-button" href="create-offices.html"><i class="fa fa-plus"></i>  New Office</a>
+            <a id="new-party-button" href="create-party.html"><i class="fa fa-plus"></i>  New Party</a>
             <a href="javascript:void(0);" class="icon" onclick="showNav()">
               <i class="fa fa-bars"></i>
             </a>
           </div>
 
 
-        <div class="main-forms main">
+        <div class="results-container">
 
             <h1>ELECTION RESULTS</h1>
 
@@ -47,18 +48,16 @@
                         <div class="office" onclick="showModal('vote-modal')">
                             Finance Minister
                         </div>
+                </div>
+
+                    <div id="results-list">
+
+                        
+
                     </div>
 
-                    <div class="winners">
-                            <img src="images/samples/user1.png"/>
 
-                            <img src="images/samples/logo2.png"/>
-                    </div>
-
-
-                    <h1 id="winner-user">JAMES MATHENGE</h1>
-            <h2 id="winner-pos">SENETOR MAKUENI</h2>
-            <h2 id="winner-party">ORANGE DEMOCRATIC PARTY</h2>
+                    
 
         </div>
 

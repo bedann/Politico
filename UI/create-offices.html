@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
 </head>
 <body>
     
@@ -22,21 +23,29 @@
             <div class="forms">
                 <h1>CREATE NEW OFFICE</h1>
 
-                        <form action="party-detail.html">
-                                <input type="text" name="name" placeholder="Office name"><br>
-                                <select>
-                                    <option value="type">Select Office Type</option>
-                                    <option value="federal">Federal</option>
-                                    <option value="legislative">Legislative</option>
-                                    <option value="state">State</option>
-                                    <option value="local government">Local government</option>
-                                  </select>
-                                <input type="submit" value="SUBMIT"/>
-                        </form>
+                <form onsubmit="createOffice(); return false;">
+                      <input id="office-name" type="text" name="name" placeholder="Office name"><br>
+                      <select id="office-type">
+                        <option value="type">Select Office Type</option>
+                        <option value="federal">Federal</option>
+                        <option value="legislative">Legislative</option>
+                        <option value="state">State</option>
+                        <option value="local">Local government</option>
+                      </select>
+                      <input type="submit" value="SUBMIT"/>
+                </form>
             
                     </div>
 
         </div>
+
+        <div id="load-modal" class="load-modal">
+          <div class="load-container">
+              <div class="loader"></div>
+          </div>
+      </div>
+
+      <div id="snackbar">Some text some message..</div>
 
 </body>
 </html>

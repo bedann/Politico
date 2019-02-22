@@ -19,7 +19,8 @@
         <a href="index.html" class="active app-name"><i class="fa fa-home"></i>  POLITICO</a>
         <a href="profile.html"><i class="fa fa-user"></i>  My Profile</a>
         <a href="results.html"><i class="fa fa-pie-chart"></i>  Results</a>
-        <a href="create-party.html"><i class="fa fa-plus"></i>  New Party</a>
+        <a id="new-office-button" href="create-offices.html"><i class="fa fa-plus"></i>  New Office</a>
+        <a id="new-party-button" href="create-party.html"><i class="fa fa-plus"></i>  New Party</a>
         <a href="javascript:void(0);" class="icon" onclick="showNav()">
           <i class="fa fa-bars"></i>
         </a>
@@ -32,11 +33,11 @@
             <img src="images/samples/logo2.png" id="party-icon">
 
             <div class="info">
-                    <h1>ORANGE DEMOCRATIC PARTY (ODM)</h1>
-                    <span>PAMOJA TUJENGANE. PAMOJA TUJENGE NCHI YETU</span>
+                    <h1 id="party-name">ORANGE DEMOCRATIC PARTY (ODM)</h1>
+                    <span id="party-slogan">PAMOJA TUJENGANE. PAMOJA TUJENGE NCHI YETU</span>
                     <div class="actions">
-                        <button class="edit" onclick="location.href = 'create-party.html'">Edit Party</button>
-                        <button class="delete-btn" onclick="location.href = 'index.html'">Delete Party</button>
+                        <button id="edit-party" class="edit" onclick="location.href = 'create-party.html'">Edit Party</button>
+                        <button id="delete-party" class="delete-btn" onclick="location.href = 'index.html'">Delete Party</button>
                     </div>
             </div>
 
@@ -48,10 +49,10 @@
                     <h2>POLITICAL OFFICES</h2>
                 </div>
 
-                <div class="cards">
+                <div class="cards" id="candidate-list">
 
 
-                        <div class="icon-card">
+                        <!-- <div class="icon-card">
                                 <img src="images/samples/user3.jpg"/>
                 
                                 <div class="icon-card-content">
@@ -81,7 +82,7 @@
                                     <span class="icon-card-subtitle">Finance minister</span>
                                     <span class="icon-card-slogan">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cupiditate maiores accusamus. Odit perferendis dolores architecto iste repellendus aut quod sunt nostrum aliquam, sed quae! Pariatur maiores numquam similique architecto.</span>
                                 </div>
-                            </div>
+                            </div> -->
             
             
             
@@ -94,7 +95,7 @@
       <div id="snackbar">Some text some message..</div>
 
       <script>
-          loadOfficesInPartyDetail();
+          initPartyDetail();
       </script>
 
 </body>

@@ -6,7 +6,7 @@
  /**
  * Convinience methods and properties
  */
-const BASE_URL = 'https://kurayangu.herokuapp.com/api/v2';
+const BASE_URL = 'http://127.0.0.1:5000/api/v2';
 
 function getToken(){
     token = localStorage.getItem('token');
@@ -37,6 +37,13 @@ function tokenError(status){
 
 function displayError(msg){
     document.getElementById('snackbar').innerText = msg
+    document.getElementById('snackbar').style.backgroundColor = '#d32f2f';
+    showSnackbar();
+}
+
+function displaySuccess(msg){
+    document.getElementById('snackbar').innerText = msg
+    document.getElementById('snackbar').style.backgroundColor = '#1abc9c';
     showSnackbar();
 }
 
@@ -77,6 +84,8 @@ function onLogin() {
             localStorage.setItem('lastname', user.lastname);
             localStorage.setItem('email', user.email);
             localStorage.setItem('phone', user.phonenumber);
+            localStorage.setItem('admin', user.admin);
+            localStorage.setItem('uid', user.id);
             // Redirect to homepage after successful login
             window.location.replace('index.html');
 
@@ -118,14 +127,12 @@ function onResetPassword() {
             window.alert(data.data[0].message);
 
         }else {
-            window.alert(data.error);
             console.log(data.status);
         }
 
     })
     .catch((error) => {
         loader.style.display = 'none';
-        window.alert(error);
     });
 }
 
@@ -177,6 +184,8 @@ function onSignup() {
             localStorage.setItem('lastname', user.lastname);
             localStorage.setItem('email', user.email);
             localStorage.setItem('phone', user.phonenumber);
+            localStorage.setItem('admin', user.isAdmin);
+            localStorage.setItem('uid', user.id);
             // Redirect to homepage after successful login
             window.location.replace('index.html');
 
@@ -210,14 +219,6 @@ function on_logout(){
 }
 
 
-/**
- * HOME PAGE
- */
-function initHomePage(){
-    loadOffices();
-}
-
-
 function loadOffices() {
 
     fetch(`${BASE_URL}/offices`, {
@@ -248,13 +249,13 @@ function loadOffices() {
         }else if(tokenError(data.status)){
             console.log('Expired token')
         }else {
-            window.alert(data.error);
+            displayError(data.error);
             console.log(data.status);
         }
 
     })
     .catch((error) => {
-        window.alert(error);
+        
     });
 }
 
@@ -282,13 +283,10 @@ function loadOfficesInPartyDetail() {
                 office_node.innerHTML = `
                 <div class="office-content">
                     <div class="office-name"> &nbsp; ${office.name}</div>
-                    <button id="${office.id}">VIE</button>
+                    <button id="${office.id}" onclick="vieForOffice(this.id);">VIE</button>
                 </div>
                 <hr>
                 `
-                office_node.addEventListener('click', function(){
-                    showModal('vote-modal');
-                });
                 offices.appendChild(office_node);
 
             });
@@ -296,14 +294,373 @@ function loadOfficesInPartyDetail() {
         }else if(tokenError(data.status)){
             console.log('Expired token')
         }else {
-            window.alert(data.error);
+            displayError(data.error);
             console.log(data.status);
         }
 
     })
     .catch((error) => {
-        window.alert(error);
+        
+    });
+}
+
+function createOffice() {
+    loader = document.getElementById('load-modal');
+    loader.style.display = 'block';
+
+    
+    let payload = {
+        name: document.getElementById('office-name').value,
+        type: document.getElementById('office-type').value
+    }
+
+    fetch(`${BASE_URL}/offices`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(payload),
+    })
+    .then(res => res.json())
+    .then((data) => {
+        loader.style.display = 'none';
+
+        if (data.status === 201) {
+
+            displaySuccess('Office created successfuly')
+            
+            setTimeout(function(){
+                 window.location.replace('index.html')
+            }, 2000);
+
+        }else {
+            displayError(data.error)
+        }
+
+    })
+    .catch((error) => {
+        loader.style.display = 'none';
+        displayError('Please check your connection')
     });
 }
 
 
+/**
+ * Create party function
+ */
+
+function createParty() {
+    loader = document.getElementById('load-modal');
+    loader.style.display = 'block';
+
+    let payload = {
+        name: document.getElementById('party-name').value,
+        slogan: document.getElementById('slogan').value,
+        hq_address: document.getElementById('hq_address').value,
+        logo_url: document.getElementById('logo_url').value,
+        manifesto: document.getElementById('manifesto').value
+    }
+
+    fetch(`${BASE_URL}/parties`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(payload),
+    })
+    .then(res => res.json())
+    .then((data) => {
+        loader.style.display = 'none';
+
+        if (data.status === 201) {
+            var party_id = data.data[0].id;
+            
+            displaySuccess('Party created successfuly')
+            
+            setTimeout(function(){
+                 showParty(party_id);
+            }, 2000);
+
+        }else {
+            displayError(data.error)
+        }
+
+    })
+    .catch((error) => {
+        loader.style.display = 'none';
+        displayError('Please check your connection')
+    });
+}
+
+
+function loadParties() {
+
+    fetch(`${BASE_URL}/parties`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        
+        if (data.status === 200) {
+
+            parties = document.getElementById('party-list');
+
+            data.data.forEach(function(party){
+
+                let party_node = createNode('div', party.id, 'icon-card');
+                var logo_url = party.logo_url;
+
+                party_node.innerHTML = `
+                <img src="${logo_url}"/>
+
+                <div class="icon-card-content">
+                    <span class="icon-card-title">${party.name}</span>
+                    <span class="icon-card-slogan">${party.manifesto}</span>
+                    <button>JOIN PARTY</button>
+                </div>
+                `
+                party_node.addEventListener('click', function(event){
+                    showParty(this.id);
+                });
+                parties.appendChild(party_node);
+
+            });
+
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        
+    });
+}
+
+function loadSingleParty() {
+    id = localStorage.getItem('party-id');
+
+    if(!id) return;
+
+    fetch(`${BASE_URL}/parties/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        
+        if (data.status === 200) {
+
+            var party = data.data[0];
+            document.getElementById("party-name").innerText = party.name
+            document.getElementById("party-slogan").innerText = party.slogan
+            document.getElementById('party-icon').src = party.logo_url
+
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        
+    });
+}
+
+
+function loadCandidates() {
+    id = localStorage.getItem('party-id');
+    if(!id) return;
+
+    document.getElementById('candidate-list').innerHTML = ''
+
+    fetch(`${BASE_URL}/party/${id}/candidates`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        
+        if (data.status === 200) {
+
+            candidates = document.getElementById('candidate-list');
+
+            data.data.forEach(function(candidate){
+
+                let candidate_node = createNode('div', candidate.id, 'icon-card');
+                
+                candidate_node.innerHTML = `
+                <img src="images/samples/user4.png"/>
+
+                <div class="icon-card-content">
+                    <span class="icon-card-title">${candidate.candidate}</span>
+                    <span class="icon-card-subtitle">${candidate.office}</span>
+                    <span class="icon-card-slogan">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cupiditate maiores accusamus. Odit perferendis dolores architecto iste repellendus aut quod sunt nostrum aliquam, sed quae! Pariatur maiores numquam similique architecto.</span>
+                </div>
+                `
+                
+                candidates.appendChild(candidate_node);
+
+            });
+
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        
+    });
+}
+
+
+function loadAllResults() {
+
+    document.getElementById('candidate-list').innerHTML = ''
+
+    fetch(`${BASE_URL}/results`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        
+        if (data.status === 200) {
+
+            candidates = document.getElementById('results-list');
+
+            data.data.forEach(function(candidate){
+
+                let candidate_node = createNode('div', candidate.id, 'candidate-result');
+                
+                candidate_node.innerHTML = `
+                <img id="candidate-result-photo" src="images/samples/user1.png"/>
+                <div class="candidate-result-details">
+                        <h1 class="winner-user">JAMES MATHENGE</h1>
+                        <h2 class="winner-pos">SENETOR MAKUENI</h2>
+                        <h2 class="winner-party">ORANGE DEMOCRATIC PARTY</h2>
+                </div>
+                <div class="result">
+                    50
+                <span style="font-size:14px;">votes</span>
+                </div>
+                `
+                
+                candidates.appendChild(candidate_node);
+
+            });
+
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        
+    });
+}
+
+
+
+function vieForOffice(office_id) {
+    party_id = localStorage.getItem('party-id');
+    uid = localStorage.getItem('uid');
+    console.log(office_id);
+
+    // loader = document.getElementById('load-modal');
+    // loader.style.display = 'block';
+
+    let payload = {
+        party: parseInt(party_id),
+        candidate: parseInt(uid)
+    }
+
+    fetch(`${BASE_URL}/office/${office_id}/register`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then((data) => {
+        // loader.style.display = 'none';
+
+        console.log(data);
+        if (data.status === 201) {
+            
+            loadCandidates();
+            displaySuccess(data.message)
+
+        }else {
+            displayError(data.error)
+        }
+
+    })
+    .catch((error) => {
+        // loader.style.display = 'none';
+        displayError('Please check your connection')
+    });
+}
+
+
+function showParty(id){
+    localStorage.setItem('party-id', id);
+    window.location = 'party-detail.html'
+}
+
+
+
+
+
+
+function initHomePage(){
+   loadOffices();
+   loadParties();
+   initAdmin();
+}
+
+function initPartyDetail(){
+    loadOfficesInPartyDetail();
+    loadSingleParty();
+    loadCandidates();
+    if(!initAdmin()){
+        document.getElementsByClassName('actions')[0].style.display = 'none';
+    }
+}
+
+function initAdmin(){
+    isAdmin = localStorage.getItem('admin');
+    if(isAdmin == 'false'){
+        document.getElementById('new-party-button').style.display = 'none'
+        document.getElementById('new-office-button').style.display = 'none'
+        return false;
+    }
+    return true;
+}
