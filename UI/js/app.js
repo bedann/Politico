@@ -7,6 +7,7 @@
  * Convinience methods and properties
  */
 const BASE_URL = 'http://127.0.0.1:5000/api/v2';
+var office_ids = [];
 
 function getToken(){
     token = localStorage.getItem('token');
@@ -44,6 +45,12 @@ function displayError(msg){
 function displaySuccess(msg){
     document.getElementById('snackbar').innerText = msg
     document.getElementById('snackbar').style.backgroundColor = '#1abc9c';
+    showSnackbar();
+}
+
+function displayInfo(msg){
+    document.getElementById('snackbar').innerText = msg
+    document.getElementById('snackbar').style.backgroundColor = '#2980b9';
     showSnackbar();
 }
 
@@ -535,7 +542,7 @@ function loadCandidates() {
 
 function loadAllResults() {
 
-    document.getElementById('candidate-list').innerHTML = ''
+    document.getElementById('results-list').innerHTML = ''
 
     fetch(`${BASE_URL}/results`, {
         method: 'GET',
@@ -549,26 +556,133 @@ function loadAllResults() {
         
         if (data.status === 200) {
 
-            candidates = document.getElementById('results-list');
+            results = document.getElementById('results-list');
 
-            data.data.forEach(function(candidate){
+            data.data.forEach(function(result){
 
-                let candidate_node = createNode('div', candidate.id, 'candidate-result');
+                let result_node = createNode('div', result.candidate, 'candidate-result');
                 
-                candidate_node.innerHTML = `
+                result_node.innerHTML = `
                 <img id="candidate-result-photo" src="images/samples/user1.png"/>
                 <div class="candidate-result-details">
-                        <h1 class="winner-user">JAMES MATHENGE</h1>
-                        <h2 class="winner-pos">SENETOR MAKUENI</h2>
-                        <h2 class="winner-party">ORANGE DEMOCRATIC PARTY</h2>
+                        <h1 class="winner-user">${result.candidate}</h1>
+                        <h2 class="winner-pos">${result.office}</h2>
+                        <h2 class="winner-party">${result.party}</h2>
                 </div>
                 <div class="result">
-                    50
+                ${result.results}
                 <span style="font-size:14px;">votes</span>
                 </div>
                 `
                 
-                candidates.appendChild(candidate_node);
+                results.appendChild(result_node);
+
+            });
+
+            if(data.data.length == 0){
+                displayInfo('No results for this Election yet')
+            }
+
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        
+    });
+}
+
+
+function loadOfficeResults(id) {
+    id = id.split('-')[1];
+
+    document.getElementById('results-list').innerHTML = ''
+
+    fetch(`${BASE_URL}/office/${id}/result`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        
+        if (data.status === 200) {
+
+            results = document.getElementById('results-list');
+
+            data.data.forEach(function(result){
+
+                let result_node = createNode('div', result.candidate, 'candidate-result');
+                
+                result_node.innerHTML = `
+                <img id="candidate-result-photo" src="images/samples/user1.png"/>
+                <div class="candidate-result-details">
+                        <h1 class="winner-user">${result.candidate}</h1>
+                        <h2 class="winner-pos">${result.office}</h2>
+                        <h2 class="winner-party">${result.party}</h2>
+                </div>
+                <div class="result">
+                ${result.results}
+                <span style="font-size:14px;">votes</span>
+                </div>
+                `
+                
+                results.appendChild(result_node);
+
+            });
+
+            if(data.data.length === 0){
+                displayInfo('No results for selected office')
+            }
+
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        
+    });
+}
+
+
+function loadOfficesInResultsPage() {
+
+    office_ids = [];
+
+    fetch(`${BASE_URL}/offices`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        
+        if (data.status === 200) {
+
+            offices = document.getElementById('office-list');
+
+            data.data.forEach(function(office){
+
+                let office_node = createNode('div', `office-${office.id}`, 'office');
+                office_node.innerText = office.name
+                office_ids.push(office.id);
+                office_node.addEventListener('click', function(){
+                    selectOffice(this.id);
+                    loadOfficeResults(this.id);
+                });
+                offices.appendChild(office_node);
 
             });
 
@@ -585,6 +699,12 @@ function loadAllResults() {
     });
 }
 
+function selectOffice(office_id){
+    office_ids.forEach(function(id){
+        document.getElementById(`office-${id}`).classList.remove('focused');
+    });
+    document.getElementById(office_id).classList.add('focused');
+}
 
 
 function vieForOffice(office_id) {
@@ -653,6 +773,12 @@ function initPartyDetail(){
     if(!initAdmin()){
         document.getElementsByClassName('actions')[0].style.display = 'none';
     }
+}
+
+function initResults(){
+    loadOfficesInResultsPage();
+    loadAllResults();
+    initAdmin();
 }
 
 function initAdmin(){

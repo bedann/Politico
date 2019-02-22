@@ -882,6 +882,12 @@ input[type=text],input[type=password], textarea, select {
     color: #f39c12;
 }
 
+#election-prompt{
+    text-align: center;
+    margin-top: 10em;
+    display: none;
+}
+
 @media (max-width: 600px) {
     #results-list{
         margin-bottom: 1em;
