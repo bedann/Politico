@@ -225,6 +225,8 @@ body {
     min-width: 20%;
     margin: 2em;
     padding: 1em;
+    max-height: 300px;
+    overflow-y: scroll;
 }
 
 .office-row{
@@ -294,6 +296,7 @@ body {
 
 .icon-card{
     max-width: 350px;
+    min-width: 350px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -536,6 +539,60 @@ input[type=text],input[type=password], textarea, select {
     transition: height 1s ease-out;
 }
 
+/* loader */
+.loader {
+    border: 16px solid #f3f3f3; 
+    border-top: 16px solid #88bdbc; 
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .outer-loader {
+    min-width: 120px;
+    margin-left: -60px;
+    position: fixed;
+    z-index: 12;
+    left: 50%;
+  }
+
+  .bottom-loader{
+      bottom: 200px;
+  }
+
+  .center-loader{
+    top: 40%;
+}
+    
+.load-modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    padding-top: -100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh; 
+    overflow: auto;
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.8); 
+}
+
+.load-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%; 
+  }
+
+
 /* The Close Button */
 .close {
     color: #aaaaaa;
@@ -604,7 +661,58 @@ input[type=text],input[type=password], textarea, select {
 }
 
 
+/* SNACKBAR */
+#snackbar {
+    visibility: hidden;
+    min-width: 350px;
+    margin-left: -175px;
+    background-color: #d32f2f;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    top: 100px;
+    font-size: 17px;
+  }
+  
+  #snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  @-webkit-keyframes fadein {
+    from {top: 0; opacity: 0;} 
+    to {top: 100px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {top: 0; opacity: 0;}
+    to {top: 100px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {top: 100px; opacity: 1;} 
+    to {top: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {top: 100px; opacity: 1;}
+    to {top: 0; opacity: 0;}
+  }
+  
+  
+
 @media (max-width: 600px) {
+
+    #snackbar {
+        min-width: 250px;
+        margin-left: -125px;
+      }
+  
     .modal-content{
         width: 85%;
         padding: 1em;
@@ -730,23 +838,102 @@ input[type=text],input[type=password], textarea, select {
 }
 
 /*RESULTS*/
-.winners img{
-    height: 150px;
-    width: 150px;
-    border-radius: 75px;
-    margin: auto;
+.candidate-result img{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
 }
 
-.winners{
-    margin-top: 5em;
+#results-list{
     margin-bottom: 2em;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
 }
-#winner-party{
+.winner-party{
     color: #6e6658;
+    font-size: 16px;
 }
-#winner-pos{
+.winner-pos{
     opacity: 0.5;
+    font-size: 18px;
 }
-#winner-user{
+.winner-user{
+    font-size: 20px;
+}
 
+.candidate-result{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-top: 3em;
+}
+
+.results-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4em;
+}
+
+.candidate-result-details{
+    margin-left: 2em;
+    width: 100%;
+}
+
+.result{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #ecf0f1;
+    min-width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    font-weight: bold;
+    flex-direction: column;
+    color: #f39c12;
+}
+
+#election-prompt{
+    text-align: center;
+    margin-top: 10em;
+    display: none;
+}
+
+@media (max-width: 600px) {
+    #results-list{
+        margin-bottom: 1em;
+        width: 100%;
+    }
+
+    .candidate-result{
+        width: 100%;
+    }
+
+
+    .candidate-result img{
+        height: 60px;
+        width: 60px;
+    }
+
+    .result{
+        width: 50px;
+        height: 50px;
+        min-width: 50px;;
+    }
+
+    .winner-party{
+        font-size: 13px;
+    }
+    .winner-pos{
+        font-size: 15px;
+    }
+    .winner-user{
+        font-size: 17px;
+    }
 }

@@ -21,7 +21,8 @@
         <a href="#home" class="active app-name"><i class="fa fa-home"></i>  POLITICO</a>
         <a href="profile.html"><i class="fa fa-user"></i>  My Profile</a>
         <a href="results.html"><i class="fa fa-pie-chart"></i>  Results</a>
-        <a href="create-party.html"><i class="fa fa-plus"></i>  New Party</a>
+        <a id="new-office-button" href="create-offices.html"><i class="fa fa-plus"></i>  New Office</a>
+        <a id="new-party-button" href="create-party.html"><i class="fa fa-plus"></i>  New Party</a>
         <a href="javascript:void(0);" class="icon" onclick="showNav()">
           <i class="fa fa-bars"></i>
         </a>
@@ -39,9 +40,9 @@
 
         </div>
         
-        <div class="cards">
+        <div id="party-list" class="cards">
 
-            <div class="icon-card" onclick="showParty()">
+            <!--  <div class="icon-card" onclick="showParty()">
                 <img src="images/samples/logo2.png"/>
 
                 <div class="icon-card-content">
@@ -49,10 +50,10 @@
                     <span class="icon-card-slogan">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cupiditate maiores accusamus. Odit perferendis dolores architecto iste repellendus aut quod sunt nostrum aliquam, sed quae! Pariatur maiores numquam similique architecto.</span>
                     <button>JOIN PARTY</button>
                 </div>
-            </div>
+            </div> -->
 
 
-            <div class="icon-card" onclick="showParty()">
+            <!-- <div class="icon-card" onclick="showParty()">
                     <img src="images/samples/logo3.png"/>
     
                     <div class="icon-card-content">
@@ -105,9 +106,11 @@
                         <span class="icon-card-slogan">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam cupiditate maiores accusamus. Odit perferendis dolores architecto iste repellendus aut quod sunt nostrum aliquam, sed quae! Pariatur maiores numquam similique architecto.</span>
                         <button>JOIN PARTY</button>
                     </div>
-                </div>
+                </div> --> 
 
         </div>
+
+        <div id="loader" class="loader outer-loader bottom-loader"></div>
 
       </div>
 
@@ -116,19 +119,10 @@
         <span class="close" onclick="closeModal('vote-modal')">&times;</span>
         <div class="modal-content">
             <h2>Secretary General</h2>
-            <div class="candidates">
+            <div id="candidate-list" class="candidates">
 
-                <div class="candidate">
-                    <img src="images/samples/user1.png"/>
-                    <div class="candidate-details">
-                        <span class="candidate-name">JAMES MATHENGE</span>
-                        <span class="candidate-position">Governor</span>
-                        <span class="candidate-party">ORANGE DEMOCRATIC Party (ODM)</span>
-                    </div>
-                    <button class="vote-button" onclick="onVote()">VOTE</button>
-                </div>
-
-                <div class="candidate">
+                    
+                <!-- <div class="candidate">
                         <img src="images/samples/user4.png"/>
                         <div class="candidate-details">
                             <span class="candidate-name">MATHENGE MBUGUA</span>
@@ -146,19 +140,11 @@
                                 <span class="candidate-party">ORANGE DEMOCRATIC Party (ODM)</span>
                             </div>
                             <button class="vote-button" onclick="onVote()">VOTE</button>
-                        </div>
+                        </div> -->
 
-                        <div class="candidate">
-                                <img src="images/samples/user3.jpg"/>
-                                <div class="candidate-details">
-                                    <span class="candidate-name">JAMES MBUGUA</span>
-                                    <span class="candidate-position">Governor</span>
-                                    <span class="candidate-party">ORANGE DEMOCRATIC Party (ODM)</span>
-                                </div>
-                                <button class="vote-button" onclick="onVote()">VOTE</button>
-                            </div>
 
             </div>
+            <div id="vote-loader" class="loader outer-loader center-loader"></div>
         </div>
     </div>
     
