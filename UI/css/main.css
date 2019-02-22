@@ -225,6 +225,8 @@ body {
     min-width: 20%;
     margin: 2em;
     padding: 1em;
+    max-height: 300px;
+    overflow-y: scroll;
 }
 
 .office-row{
@@ -552,6 +554,21 @@ input[type=text],input[type=password], textarea, select {
     100% { transform: rotate(360deg); }
   }
 
+  .outer-loader {
+    min-width: 120px;
+    margin-left: -60px;
+    position: fixed;
+    z-index: 12;
+    left: 50%;
+  }
+
+  .bottom-loader{
+      bottom: 200px;
+  }
+
+  .center-loader{
+    top: 40%;
+}
     
 .load-modal {
     display: none; 

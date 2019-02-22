@@ -93,6 +93,7 @@ function onLogin() {
             localStorage.setItem('phone', user.phonenumber);
             localStorage.setItem('admin', user.admin);
             localStorage.setItem('uid', user.id);
+            localStorage.setItem('passport_url', user.passport_url);
             // Redirect to homepage after successful login
             window.location.replace('index.html');
 
@@ -193,6 +194,7 @@ function onSignup() {
             localStorage.setItem('phone', user.phonenumber);
             localStorage.setItem('admin', user.isAdmin);
             localStorage.setItem('uid', user.id);
+            localStorage.setItem('passport_url', user.passport_url);
             // Redirect to homepage after successful login
             window.location.replace('index.html');
 
@@ -218,6 +220,7 @@ function loadUserProfile(){
     document.getElementById('username').innerText = `${fname} ${lname}`
     document.getElementById('email').innerText = localStorage.getItem('email')
     document.getElementById('phone').innerText = localStorage.getItem('phone')
+    document.getElementById('photo').src = localStorage.getItem('passport_url')
 }
 
 function on_logout(){
@@ -248,6 +251,8 @@ function loadOffices() {
                 office_node.innerText = office.name
                 office_node.addEventListener('click', function(){
                     showModal('vote-modal');
+                    localStorage.setItem('office-id', this.id);
+                    loadCandidatesHomePage(this.id);
                 });
                 offices.appendChild(office_node);
 
@@ -404,6 +409,9 @@ function createParty() {
 
 function loadParties() {
 
+    loader = document.getElementById('loader');
+    loader.style.display = 'block';
+
     fetch(`${BASE_URL}/parties`, {
         method: 'GET',
         headers: {
@@ -414,6 +422,8 @@ function loadParties() {
     .then(res => res.json())
     .then((data) => {
         
+        loader.style.display = 'none';
+
         if (data.status === 200) {
 
             parties = document.getElementById('party-list');
@@ -440,9 +450,11 @@ function loadParties() {
             });
 
         }else if(tokenError(data.status)){
+            loader.style.display = 'none';
             console.log('Expired token')
         }else {
             displayError(data.error);
+            loader.style.display = 'none';
             console.log(data.status);
         }
 
@@ -473,7 +485,7 @@ function loadSingleParty() {
             document.getElementById("party-name").innerText = party.name
             document.getElementById("party-slogan").innerText = party.slogan
             document.getElementById('party-icon').src = party.logo_url
-
+            
         }else if(tokenError(data.status)){
             console.log('Expired token')
         }else {
@@ -513,7 +525,7 @@ function loadCandidates() {
                 let candidate_node = createNode('div', candidate.id, 'icon-card');
                 
                 candidate_node.innerHTML = `
-                <img src="images/samples/user4.png"/>
+                <img src="${candidate.passport_url}"/>
 
                 <div class="icon-card-content">
                     <span class="icon-card-title">${candidate.candidate}</span>
@@ -540,9 +552,70 @@ function loadCandidates() {
 }
 
 
+function loadCandidatesHomePage(office_id) {
+
+    document.getElementById('candidate-list').innerHTML = ''
+
+    loader = document.getElementById('vote-loader');
+    loader.style.display = 'block';
+
+    fetch(`${BASE_URL}/party/${office_id}/candidates`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+
+        loader.style.display = 'none';
+
+        if (data.status === 200) {
+
+            candidates = document.getElementById('candidate-list');
+
+            data.data.forEach(function(candidate){
+
+                let candidate_node = createNode('div', candidate.id, 'candidate');
+                
+                candidate_node.innerHTML = `
+                <img src="${candidate.passport_url}"/>
+                    <div class="candidate-details">
+                        <span class="candidate-name">${candidate.candidate}</span>
+                        <span class="candidate-position">${candidate.office}</span>
+                        <span class="candidate-party">${candidate.party}</span>
+                    </div>
+                    <button class="vote-button" onclick="castVote(${candidate.id}, ${office_id})">VOTE</button>
+                `
+                
+                candidates.appendChild(candidate_node);
+
+            });
+
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+            loader.style.display = 'none';
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+            loader.style.display = 'none';
+        }
+
+    })
+    .catch((error) => {
+        
+    });
+}
+
+
+
 function loadAllResults() {
 
     document.getElementById('results-list').innerHTML = ''
+
+    loader = document.getElementById('loader');
+    loader.style.display = 'block';
 
     fetch(`${BASE_URL}/results`, {
         method: 'GET',
@@ -553,6 +626,7 @@ function loadAllResults() {
     })
     .then(res => res.json())
     .then((data) => {
+        loader.style.display = 'none';
         
         if (data.status === 200) {
 
@@ -563,7 +637,7 @@ function loadAllResults() {
                 let result_node = createNode('div', result.candidate, 'candidate-result');
                 
                 result_node.innerHTML = `
-                <img id="candidate-result-photo" src="images/samples/user1.png"/>
+                <img id="candidate-result-photo" src="${result.passport_url}"/>
                 <div class="candidate-result-details">
                         <h1 class="winner-user">${result.candidate}</h1>
                         <h2 class="winner-pos">${result.office}</h2>
@@ -584,8 +658,10 @@ function loadAllResults() {
             }
 
         }else if(tokenError(data.status)){
+            loader.style.display = 'none';
             console.log('Expired token')
         }else {
+            loader.style.display = 'none';
             displayError(data.error);
             console.log(data.status);
         }
@@ -601,6 +677,8 @@ function loadOfficeResults(id) {
     id = id.split('-')[1];
 
     document.getElementById('results-list').innerHTML = ''
+    loader = document.getElementById('loader');
+    loader.style.display = 'block';
 
     fetch(`${BASE_URL}/office/${id}/result`, {
         method: 'GET',
@@ -612,6 +690,7 @@ function loadOfficeResults(id) {
     .then(res => res.json())
     .then((data) => {
         
+        loader.style.display = 'none';
         if (data.status === 200) {
 
             results = document.getElementById('results-list');
@@ -621,7 +700,7 @@ function loadOfficeResults(id) {
                 let result_node = createNode('div', result.candidate, 'candidate-result');
                 
                 result_node.innerHTML = `
-                <img id="candidate-result-photo" src="images/samples/user1.png"/>
+                <img id="candidate-result-photo" src="${result.passport_url}"/>
                 <div class="candidate-result-details">
                         <h1 class="winner-user">${result.candidate}</h1>
                         <h2 class="winner-pos">${result.office}</h2>
@@ -642,9 +721,11 @@ function loadOfficeResults(id) {
             }
 
         }else if(tokenError(data.status)){
+            loader.style.display = 'none';
             console.log('Expired token')
         }else {
             displayError(data.error);
+            loader.style.display = 'none';
             console.log(data.status);
         }
 
@@ -736,6 +817,50 @@ function vieForOffice(office_id) {
         if (data.status === 201) {
             
             loadCandidates();
+            displaySuccess(data.message)
+
+        }else {
+            displayError(data.error)
+        }
+
+    })
+    .catch((error) => {
+        // loader.style.display = 'none';
+        displayError('Please check your connection')
+    });
+}
+
+
+
+function castVote(candidate, office_id) {
+    console.log(office_id)
+    // office_id = localStorage.getItem('office-id');
+
+    
+    // loader = document.getElementById('load-modal');
+    // loader.style.display = 'block';
+
+    let payload = {
+        office: parseInt(office_id),
+        candidate: parseInt(candidate)
+    }
+
+    fetch(`${BASE_URL}/votes`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then((data) => {
+        // loader.style.display = 'none';
+
+        console.log(data);
+        if (data.status === 201) {
+            
+            closeModal('vote-modal');
             displaySuccess(data.message)
 
         }else {
