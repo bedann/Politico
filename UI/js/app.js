@@ -576,6 +576,45 @@ function loadSingleParty() {
 }
 
 
+function deleteParty() {
+    id = localStorage.getItem('party-id');
+
+    if(!id) return;
+    if (!confirm("You are about to delete this party")) {
+        return;
+    }
+
+    fetch(`${BASE_URL}/parties/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        
+        if (data.status === 200) {
+
+            displaySuccess('Party Deleted');
+            setTimeout(function(){
+                window.location.replace('index.html')
+           }, 2000);
+            
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        
+    });
+}
+
+
 function loadCandidates() {
     id = localStorage.getItem('party-id');
     if(!id) return;
