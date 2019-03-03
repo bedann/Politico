@@ -440,7 +440,7 @@ function loadParties() {
                 <div class="icon-card-content">
                     <span class="icon-card-title">${party.name}</span>
                     <span class="icon-card-slogan">${party.manifesto}</span>
-                    <button>JOIN PARTY</button>
+                    <button>VIEW PARTY</button>
                 </div>
                 `
                 party_node.addEventListener('click', function(event){
@@ -506,9 +506,12 @@ function loadCandidates() {
     id = localStorage.getItem('party-id');
     if(!id) return;
 
-    document.getElementById('candidate-list').innerHTML = ''
+    document.getElementById('candidate-list').innerHTML = '';
 
-    fetch(`${BASE_URL}/party/${id}/candidates`, {
+    const url = `${BASE_URL}/party/${id}/candidates`;
+    console.log(url);
+
+    fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -756,6 +759,16 @@ function loadOfficesInResultsPage() {
         if (data.status === 200) {
 
             offices = document.getElementById('office-list');
+
+            let all = createNode('div', `office-all-results`, 'office');
+            all.classList.add('focused');
+            all.innerText = "All Results"
+            office_ids.push(`all-results`);
+            all.addEventListener('click', function(){
+                selectOffice(this.id);
+                loadAllResults();
+            });
+            offices.appendChild(all);
 
             data.data.forEach(function(office){
 
