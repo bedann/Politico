@@ -106,7 +106,7 @@ body {
   }
 
   .page-header-detail::before{
-    background-image: url('../images/3.jpg');
+    background-image: url('../images/2.jpg');
 }
 
   .page-header h1{
@@ -118,7 +118,23 @@ body {
     color: white;
 }
 
+.center-prompt{
+    margin: auto;
+    text-align: center;
+    margin-top: 3em;
+    opacity: 0.3;
+}
+
+.check{
+    height: 50px;
+    width: 50px;
+}
+
   @media screen and (max-width: 600px) {
+    .check{
+        height: 25px;
+        width: 25px;
+    }
       .page-header::before{
           display: none;
       }
@@ -627,7 +643,7 @@ input[type=text],input[type=password], textarea, select {
     margin-bottom: 1em;
 }
 
-.candidate img:not(.win-icon){
+.candidate img:not(.win-icon):not(.check){
     height: 100px;
     width: 100px;
     border-radius: 50px;
@@ -660,6 +676,21 @@ input[type=text],input[type=password], textarea, select {
     color: #ffffff;
 }
 
+.outof{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.vote-perc{
+    color: #F29C13;
+    background-color: #eeeeee;
+    padding: 5px;
+    border-radius: 40%;
+}
+
+.candidate-results{
+    margin-top: 10px;
+}
 
 /* SNACKBAR */
 #snackbar {
@@ -717,7 +748,7 @@ input[type=text],input[type=password], textarea, select {
         width: 85%;
         padding: 1em;
     }
-    .candidate img:not(.win-icon){
+    .candidate img:not(.win-icon):not(.check){
         height: 60px;
         width: 60px;
         border-radius: 30px;

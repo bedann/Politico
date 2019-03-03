@@ -83,7 +83,8 @@ function onLogin() {
         loader.style.display = 'none';
 
         if (data.status === 200) {
-            var user = data.data[0].user
+            var user = data.data[0].user;
+            var votingHistory = data.data[0].voting_history;
 
             // Save user profile to local storage
             localStorage.setItem('token', data.data[0].token);
@@ -94,6 +95,9 @@ function onLogin() {
             localStorage.setItem('admin', user.admin);
             localStorage.setItem('uid', user.id);
             localStorage.setItem('passport_url', user.passport_url);
+            votingHistory.forEach(function(history){
+                localStorage.setItem(`vote-${history.office}`, history.candidate);
+            })
             // Redirect to homepage after successful login
             window.location.replace('index.html');
 
@@ -104,8 +108,9 @@ function onLogin() {
 
     })
     .catch((error) => {
+        console.log(error);
         loader.style.display = 'none';
-        displayError('Please check your connection')
+        displayError('Please check your connection');
     });
 }
 
@@ -221,6 +226,75 @@ function loadUserProfile(){
     document.getElementById('email').innerText = localStorage.getItem('email')
     document.getElementById('phone').innerText = localStorage.getItem('phone')
     document.getElementById('photo').src = localStorage.getItem('passport_url')
+}
+
+function loadVotingHistory() {
+
+    document.getElementById('voting-history').innerHTML = ''
+
+    loader = document.getElementById('loader');
+    loader.style.display = 'block';
+
+    fetch(`${BASE_URL}/voting-history`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        loader.style.display = 'none';
+        
+            console.log(data);
+        if (data.status === 200) {
+            results = document.getElementById('voting-history');
+
+            let current_year = createNode('h1', 'current-year', 'h1');
+            current_year.innerText = new Date().getFullYear();
+            results.appendChild(current_year);
+
+
+            data.data.forEach(function(result){
+
+                let result_node = createNode('div', '', 'candidate');
+
+                let percentage = (result.results/result.total_votes) * 100
+                
+                result_node.innerHTML = `
+                <img src="${result.passport_url}" class="profile"/>
+                <div class="candidate-details">
+                    <span class="candidate-name">${result.candidate}</span>
+                    <span class="candidate-position">${result.office}</span>
+                    <span class="candidate-party">${result.party}</span>
+                    <span class="candidate-results">Votes: <span class="outof">${result.results}/${result.total_votes}</span>   <span class="vote-perc">${Math.ceil(percentage)}%</span></span>
+                </div>
+                <img src="images/won.png" style="display: ${((percentage => 50) ? 'block' : 'none')}" class="win-icon"/>
+                `
+                
+                results.appendChild(result_node);
+
+            });
+
+            if(data.data.length == 0){
+                let notyet = createNode('h3', 'not-yet', 'center-prompt');
+                notyet.innerText ='You have not voted for any candidate yet'
+                results.appendChild(notyet);
+            }
+
+        }else if(tokenError(data.status)){
+            loader.style.display = 'none';
+            console.log('Expired token')
+        }else {
+            loader.style.display = 'none';
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        
+    });
 }
 
 function on_logout(){
@@ -578,6 +652,8 @@ function loadCandidatesHomePage(office_id, name) {
         loader.style.display = 'none';
 
         if (data.status === 200) {
+            let voteExists = localStorage.getItem(`vote-${office_id}`);
+            let uid = localStorage.getItem('uid');
 
             candidates = document.getElementById('candidate-list');
 
@@ -585,14 +661,23 @@ function loadCandidatesHomePage(office_id, name) {
 
                 let candidate_node = createNode('div', candidate.id, 'candidate');
                 
+                let action = `<button class="vote-button" onclick="castVote(${candidate.id}, ${office_id})">VOTE</button>`;
+                if (voteExists){
+                    if (candidate.id == voteExists){
+                        action = '<img class="check" src="images/checkmark2.png"/>';
+                    }else{
+                        action = ''
+                    }
+                }
+
                 candidate_node.innerHTML = `
-                <img src="${candidate.passport_url}"/>
+                    <img src="${candidate.passport_url}"/>
                     <div class="candidate-details">
                         <span class="candidate-name">${candidate.candidate}</span>
                         <span class="candidate-position">${candidate.office}</span>
                         <span class="candidate-party">${candidate.party}</span>
                     </div>
-                    <button class="vote-button" onclick="castVote(${candidate.id}, ${office_id})">VOTE</button>
+                    ${action}
                 `
                 
                 candidates.appendChild(candidate_node);
@@ -849,12 +934,6 @@ function vieForOffice(office_id) {
 
 
 function castVote(candidate, office_id) {
-    console.log(`Office_id: ${office_id}, Candidate_id: ${candidate}`)
-    // office_id = localStorage.getItem('office-id');
-
-    
-    // loader = document.getElementById('load-modal');
-    // loader.style.display = 'block';
 
     let payload = {
         office: parseInt(office_id),
@@ -871,13 +950,13 @@ function castVote(candidate, office_id) {
     })
     .then(res => res.json())
     .then((data) => {
-        // loader.style.display = 'none';
 
         console.log(data);
         if (data.status === 201) {
             
             closeModal('vote-modal');
-            displaySuccess(data.message)
+            displaySuccess(data.message);
+            localStorage.setItem(`vote-${office_id}`, candidate);
 
         }else {
             displayError(data.error)
@@ -885,7 +964,6 @@ function castVote(candidate, office_id) {
 
     })
     .catch((error) => {
-        // loader.style.display = 'none';
         displayError('Please check your connection')
     });
 }
