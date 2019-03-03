@@ -6,7 +6,7 @@
  /**
  * Convinience methods and properties
  */
-const BASE_URL = 'https://kurayangu.herokuapp.com/api/v2';
+const BASE_URL = 'http://127.0.0.1:5000/api/v2';
 var office_ids = [];
 
 function getToken(){
@@ -252,7 +252,7 @@ function loadOffices() {
                 office_node.addEventListener('click', function(){
                     showModal('vote-modal');
                     localStorage.setItem('office-id', this.id);
-                    loadCandidatesHomePage(this.id);
+                    loadCandidatesHomePage(this.id, office.name);
                 });
                 offices.appendChild(office_node);
 
@@ -389,8 +389,9 @@ function createParty() {
         if (data.status === 201) {
             var party_id = data.data[0].id;
             
-            displaySuccess('Party created successfuly')
-            
+            displaySuccess('Party created successfuly');
+
+            localStorage.setItem('party-id', party_id);
             setTimeout(function(){
                  showParty(party_id);
             }, 2000);
@@ -439,10 +440,11 @@ function loadParties() {
                 <div class="icon-card-content">
                     <span class="icon-card-title">${party.name}</span>
                     <span class="icon-card-slogan">${party.manifesto}</span>
-                    <button>JOIN PARTY</button>
+                    <button>VIEW PARTY</button>
                 </div>
                 `
                 party_node.addEventListener('click', function(event){
+                    localStorage.setItem('party-id', this.id);
                     showParty(this.id);
                 });
                 parties.appendChild(party_node);
@@ -504,9 +506,12 @@ function loadCandidates() {
     id = localStorage.getItem('party-id');
     if(!id) return;
 
-    document.getElementById('candidate-list').innerHTML = ''
+    document.getElementById('candidate-list').innerHTML = '';
 
-    fetch(`${BASE_URL}/party/${id}/candidates`, {
+    const url = `${BASE_URL}/party/${id}/candidates`;
+    console.log(url);
+
+    fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -552,14 +557,15 @@ function loadCandidates() {
 }
 
 
-function loadCandidatesHomePage(office_id) {
+function loadCandidatesHomePage(office_id, name) {
 
     document.getElementById('candidate-list').innerHTML = ''
+    document.getElementById('office-name').innerText = name
 
     loader = document.getElementById('vote-loader');
     loader.style.display = 'block';
 
-    fetch(`${BASE_URL}/party/${office_id}/candidates`, {
+    fetch(`${BASE_URL}/office/${office_id}/candidates`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -754,6 +760,16 @@ function loadOfficesInResultsPage() {
 
             offices = document.getElementById('office-list');
 
+            let all = createNode('div', `office-all-results`, 'office');
+            all.classList.add('focused');
+            all.innerText = "All Results"
+            office_ids.push(`all-results`);
+            all.addEventListener('click', function(){
+                selectOffice(this.id);
+                loadAllResults();
+            });
+            offices.appendChild(all);
+
             data.data.forEach(function(office){
 
                 let office_node = createNode('div', `office-${office.id}`, 'office');
@@ -833,7 +849,7 @@ function vieForOffice(office_id) {
 
 
 function castVote(candidate, office_id) {
-    console.log(office_id)
+    console.log(`Office_id: ${office_id}, Candidate_id: ${candidate}`)
     // office_id = localStorage.getItem('office-id');
 
     
@@ -876,7 +892,6 @@ function castVote(candidate, office_id) {
 
 
 function showParty(id){
-    localStorage.setItem('party-id', id);
     window.location = 'party-detail.html'
 }
 
