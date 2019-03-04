@@ -24,46 +24,6 @@ function showNav() {
   }
 
 
-function initAddParty(){
-
-  const uploadButton = document.querySelector('.browse-btn');
-  const fileInfo = document.querySelector('.file-info');
-  const realInput = document.getElementById('real-input');
-
-  uploadButton.addEventListener('click', (e) => {
-      document.getElementById('real-input').click();
-  });
-
-  realInput.addEventListener('change', () => {
-    const name = realInput.value.split(/\\|\//).pop();
-    const truncated = name.length > 20 
-      ? name.substr(name.length - 20) 
-      : name;
-    
-    fileInfo.innerHTML = truncated;
-  });
-
-  /////////////
-  const uploadButton2 = document.querySelector('.browse-btn2');
-  const fileInfo2 = document.querySelector('.file-info2');
-  const realInput2 = document.getElementById('real-input2');
-
-  uploadButton2.addEventListener('click', (e) => {
-    realInput2.click();
-  });
-
-  realInput2.addEventListener('change', () => {
-    const name = realInput2.value.split(/\\|\//).pop();
-    const truncated = name.length > 20 
-      ? name.substr(name.length - 20) 
-      : name;
-    
-    fileInfo2.innerHTML = truncated;
-  });
-  
-}
-
-
 ////
 function onVote(){
     console.log('voted');
