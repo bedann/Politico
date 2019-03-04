@@ -436,6 +436,14 @@ function createOffice() {
  * Create party function
  */
 
+ function onCreatePartySubmit(){
+     if(localStorage.getItem('editMode')){
+        editParty();
+     }else{
+         createParty();
+     }
+ }
+
 function createParty() {
     loader = document.getElementById('load-modal');
     loader.style.display = 'block';
@@ -469,6 +477,56 @@ function createParty() {
             setTimeout(function(){
                  showParty(party_id);
             }, 2000);
+
+        }else {
+            displayError(data.error)
+        }
+
+    })
+    .catch((error) => {
+        loader.style.display = 'none';
+        displayError('Please check your connection')
+    });
+}
+
+function onEditParty(){
+    localStorage.setItem('editMode', 'true');
+    setTimeout(function(){
+        location.href = 'create-party.html';
+   }, 1000);
+}
+
+function editParty() {
+    loader = document.getElementById('load-modal');
+    loader.style.display = 'block';
+
+    let payload = {
+        name: document.getElementById('party-name').value,
+        slogan: document.getElementById('slogan').value,
+        hq_address: document.getElementById('hq_address').value,
+        logo_url: document.getElementById('logo_url').value,
+        manifesto: document.getElementById('manifesto').value,
+        id: localStorage.getItem('party-id')
+    }
+
+    fetch(`${BASE_URL}/parties`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(payload),
+    })
+    .then(res => res.json())
+    .then((data) => {
+        loader.style.display = 'none';
+
+        if (data.status === 201) {
+            var party_id = data.data[0].id;
+            
+            setTimeout(function(){
+                 showParty(party_id);
+            }, 1000);
 
         }else {
             displayError(data.error)
@@ -575,6 +633,45 @@ function loadSingleParty() {
     });
 }
 
+function loadSinglePartyEditMode() {
+    loader = document.getElementById('load-modal');
+    loader.style.display = 'block';
+    id = localStorage.getItem('party-id');
+
+    if(!id) return;
+
+    fetch(`${BASE_URL}/parties/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getToken()}`
+        }
+    })
+    .then(res => res.json())
+    .then((data) => {
+        loader.style.display = 'none';
+
+        if (data.status === 200) {
+
+            var party = data.data[0];
+            document.getElementById("party-name").value = party.name
+            document.getElementById("slogan").value = party.slogan
+            document.getElementById('hq_address').value = party.hq_address
+            document.getElementById('manifesto').value = party.manifesto
+            document.getElementById('logo_url').value = party.logo_url
+            
+        }else if(tokenError(data.status)){
+            console.log('Expired token')
+        }else {
+            displayError(data.error);
+            console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        loader.style.display = 'none';
+    });
+}
 
 function deleteParty() {
     id = localStorage.getItem('party-id');
@@ -1010,6 +1107,10 @@ function castVote(candidate, office_id) {
 
 function showParty(id){
     window.location = 'party-detail.html'
+    if (localStorage.getItem('editMode')){
+        displaySuccess('Party updated successfuly');
+        localStorage.removeItem('editMode');
+    }
 }
 
 
@@ -1036,6 +1137,12 @@ function initResults(){
     loadOfficesInResultsPage();
     loadAllResults();
     initAdmin();
+}
+
+function initAddParty(){
+    if(localStorage.getItem('editMode')){
+        loadSinglePartyEditMode();
+    }
 }
 
 function initAdmin(){

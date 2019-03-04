@@ -22,7 +22,7 @@
                 <div class="forms">
                 <h1>CREATE NEW PARTY</h1>
 
-                        <form onsubmit="createParty(); return false;">
+                        <form onsubmit="onCreatePartySubmit(); return false;">
                                 <input id="party-name" type="text" name="name" placeholder="Full name of party"><br>
                                 <input id="slogan" type="text" name="slogan" placeholder="Slogan (max 30 characters)"><br>
                                 <input id="hq_address" type="text" name="hq_address" placeholder="Head Quarters"><br>
@@ -43,7 +43,7 @@
 
         <div id="snackbar">Some text some message..</div>
 
-        <script src="js/main.js">
+        <script>
             initAddParty();
         </script>
         
