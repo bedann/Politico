@@ -233,6 +233,7 @@ function loadUserProfile(){
     document.getElementById('email').innerText = localStorage.getItem('email')
     document.getElementById('phone').innerText = localStorage.getItem('phone')
     document.getElementById('photo').src = localStorage.getItem('passport_url')
+    initAdmin();
 }
 
 function loadVotingHistory() {
