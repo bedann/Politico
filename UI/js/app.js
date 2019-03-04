@@ -818,7 +818,7 @@ function loadCandidatesHomePage(office_id, name) {
                 }
 
                 candidate_node.innerHTML = `
-                    <img src="${candidate.passport_url}"/>
+                    <img src="${candidate.passport_url}" />
                     <div class="candidate-details">
                         <span class="candidate-name">${candidate.candidate}</span>
                         <span class="candidate-position">${candidate.office}</span>
@@ -875,7 +875,7 @@ function loadAllResults() {
                 let result_node = createNode('div', result.candidate, 'candidate-result');
                 
                 result_node.innerHTML = `
-                <img id="candidate-result-photo" src="${result.passport_url}"/>
+                <img id="candidate-result-photo" src="${result.passport_url}" />
                 <div class="candidate-result-details">
                         <h1 class="winner-user">${result.candidate}</h1>
                         <h2 class="winner-pos">${result.office}</h2>
@@ -938,7 +938,7 @@ function loadOfficeResults(id) {
                 let result_node = createNode('div', result.candidate, 'candidate-result');
                 
                 result_node.innerHTML = `
-                <img id="candidate-result-photo" src="${result.passport_url}"/>
+                <img id="candidate-result-photo" src="${result.passport_url}" />
                 <div class="candidate-result-details">
                         <h1 class="winner-user">${result.candidate}</h1>
                         <h2 class="winner-pos">${result.office}</h2>
