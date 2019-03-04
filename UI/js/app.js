@@ -122,13 +122,19 @@ function onResetPassword() {
     loader = document.getElementById('load-modal');
     loader.style.display = 'block';
 
+    let email = document.getElementById('login_email').value;
+    if(email.length < 3){
+        displayError('Please provide a valid email');
+        return;
+    }
+
     fetch(`${BASE_URL}/auth/reset`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            email: document.getElementById('login_email').value
+            email: email
         }),
     })
     .then(res => res.json())
@@ -137,15 +143,16 @@ function onResetPassword() {
 
         if (data.status === 200) {
 
-            window.alert(data.data[0].message);
+            displaySuccess(data.data[0].message);
 
         }else {
-            console.log(data.status);
+            displayError('Please provide a valid email');
         }
 
     })
     .catch((error) => {
         loader.style.display = 'none';
+        displayError('Please provide a valid email');
     });
 }
 
@@ -602,6 +609,8 @@ function loadSingleParty() {
     id = localStorage.getItem('party-id');
 
     if(!id) return;
+    loader = document.getElementById('loader');
+    loader.style.display = 'block';
 
     fetch(`${BASE_URL}/parties/${id}`, {
         method: 'GET',
@@ -612,7 +621,8 @@ function loadSingleParty() {
     })
     .then(res => res.json())
     .then((data) => {
-        
+        loader.style.display = 'none';
+
         if (data.status === 200) {
 
             var party = data.data[0];
@@ -629,7 +639,7 @@ function loadSingleParty() {
 
     })
     .catch((error) => {
-        
+        loader.style.display = 'none';
     });
 }
 
@@ -981,19 +991,13 @@ function loadOfficesInResultsPage() {
 
             offices = document.getElementById('office-list');
 
-            let all = createNode('div', `office-all-results`, 'office');
-            all.classList.add('focused');
-            all.innerText = "All Results"
-            office_ids.push(`all-results`);
-            all.addEventListener('click', function(){
-                selectOffice(this.id);
-                loadAllResults();
-            });
-            offices.appendChild(all);
-
             data.data.forEach(function(office){
 
                 let office_node = createNode('div', `office-${office.id}`, 'office');
+                if(office_ids.length == 0){
+                    office_node.classList.add('focused');
+                    loadOfficeResults(`office-${office.id}`);
+                }
                 office_node.innerText = office.name
                 office_ids.push(office.id);
                 office_node.addEventListener('click', function(){
@@ -1135,13 +1139,13 @@ function initPartyDetail(){
 
 function initResults(){
     loadOfficesInResultsPage();
-    loadAllResults();
     initAdmin();
 }
 
 function initAddParty(){
     if(localStorage.getItem('editMode')){
         loadSinglePartyEditMode();
+        document.getElementById('page-title').innerText = 'EDIT PARTY'
     }
 }
 
