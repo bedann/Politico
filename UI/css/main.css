@@ -582,6 +582,10 @@ input[type=text],input[type=password], textarea, select {
       bottom: 200px;
   }
 
+.top-loader{
+    top: 20%;
+}
+
   .center-loader{
     top: 40%;
 }

@@ -602,6 +602,8 @@ function loadSingleParty() {
     id = localStorage.getItem('party-id');
 
     if(!id) return;
+    loader = document.getElementById('loader');
+    loader.style.display = 'block';
 
     fetch(`${BASE_URL}/parties/${id}`, {
         method: 'GET',
@@ -612,7 +614,8 @@ function loadSingleParty() {
     })
     .then(res => res.json())
     .then((data) => {
-        
+        loader.style.display = 'none';
+
         if (data.status === 200) {
 
             var party = data.data[0];
@@ -629,7 +632,7 @@ function loadSingleParty() {
 
     })
     .catch((error) => {
-        
+        loader.style.display = 'none';
     });
 }
 
