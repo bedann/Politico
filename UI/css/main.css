@@ -593,7 +593,7 @@ input[type=text],input[type=password], textarea, select {
 .load-modal {
     display: none; 
     position: fixed; 
-    z-index: 1; 
+    z-index: 19; 
     padding-top: -100px;
     left: 0;
     top: 0;
@@ -650,6 +650,7 @@ input[type=text],input[type=password], textarea, select {
 .candidate img:not(.win-icon):not(.check){
     height: 100px;
     width: 100px;
+    min-width: 100px;
     border-radius: 50px;
     margin-right: 2em;
 }
@@ -755,6 +756,7 @@ input[type=text],input[type=password], textarea, select {
     .candidate img:not(.win-icon):not(.check){
         height: 60px;
         width: 60px;
+        min-width: 60px;
         border-radius: 30px;
         margin-right: 1em;
     }
@@ -836,6 +838,7 @@ input[type=text],input[type=password], textarea, select {
     height: 50px;
 }
 
+
 #logout{
     width: 100%;
     background-color: rgb(224, 57, 57);
@@ -876,6 +879,7 @@ input[type=text],input[type=password], textarea, select {
 .candidate-result img{
     height: 100px;
     width: 100px;
+    min-width: 100px;
     border-radius: 50%;
 }
 
@@ -954,6 +958,7 @@ input[type=text],input[type=password], textarea, select {
     .candidate-result img{
         height: 60px;
         width: 60px;
+        min-width: 60px;
     }
 
     .result{
