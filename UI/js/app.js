@@ -984,19 +984,13 @@ function loadOfficesInResultsPage() {
 
             offices = document.getElementById('office-list');
 
-            let all = createNode('div', `office-all-results`, 'office');
-            all.classList.add('focused');
-            all.innerText = "All Results"
-            office_ids.push(`all-results`);
-            all.addEventListener('click', function(){
-                selectOffice(this.id);
-                loadAllResults();
-            });
-            offices.appendChild(all);
-
             data.data.forEach(function(office){
 
                 let office_node = createNode('div', `office-${office.id}`, 'office');
+                if(office_ids.length == 0){
+                    office_node.classList.add('focused');
+                    loadOfficeResults(`office-${office.id}`);
+                }
                 office_node.innerText = office.name
                 office_ids.push(office.id);
                 office_node.addEventListener('click', function(){
@@ -1138,7 +1132,6 @@ function initPartyDetail(){
 
 function initResults(){
     loadOfficesInResultsPage();
-    loadAllResults();
     initAdmin();
 }
 
