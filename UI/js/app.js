@@ -1145,6 +1145,7 @@ function initResults(){
 function initAddParty(){
     if(localStorage.getItem('editMode')){
         loadSinglePartyEditMode();
+        document.getElementById('page-title').innerText = 'EDIT PARTY'
     }
 }
 
