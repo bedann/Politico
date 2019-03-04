@@ -122,13 +122,19 @@ function onResetPassword() {
     loader = document.getElementById('load-modal');
     loader.style.display = 'block';
 
+    let email = document.getElementById('login_email').value;
+    if(email.length < 3){
+        displayError('Please provide a valid email');
+        return;
+    }
+
     fetch(`${BASE_URL}/auth/reset`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            email: document.getElementById('login_email').value
+            email: email
         }),
     })
     .then(res => res.json())
@@ -137,15 +143,16 @@ function onResetPassword() {
 
         if (data.status === 200) {
 
-            window.alert(data.data[0].message);
+            displaySuccess(data.data[0].message);
 
         }else {
-            console.log(data.status);
+            displayError('Please provide a valid email');
         }
 
     })
     .catch((error) => {
         loader.style.display = 'none';
+        displayError('Please provide a valid email');
     });
 }
 
