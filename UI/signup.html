@@ -88,6 +88,13 @@
     </div>
 
     <div id="snackbar">Some text some message..</div>
+
+    <script>
+        let tab = location.search.replace("?tab=", "");
+        if(tab == '2'){
+            switchTab('login','tab-panel');
+        }
+    </script>
     
 </body>
 </html>

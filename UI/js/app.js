@@ -6,7 +6,7 @@
  /**
  * Convinience methods and properties
  */
-const BASE_URL = 'https://kurayangu.herokuapp.com/api/v2';
+const BASE_URL = 'http://127.0.0.1:5000/api/v2';
 var office_ids = [];
 
 function getToken(){
@@ -213,6 +213,55 @@ function onSignup() {
         }else {
             displayError(data.error)
             console.log(data.status);
+        }
+
+    })
+    .catch((error) => {
+        loader.style.display = 'none';
+        displayError('Please check your connection')
+    });
+}
+
+function resetPassword() {
+
+    let password = document.getElementById('password').value
+    let c_password = document.getElementById('c-password').value
+    if (password !== c_password){
+        displayError('Passwords do not match');
+        return;
+    }
+
+    let token = location.search.replace("?token=", "");
+
+    loader = document.getElementById('load-modal');
+    loader.style.display = 'block';
+    
+    let payload = {
+        password: password
+    }
+
+    fetch(`${BASE_URL}/reset-password`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload),
+    })
+    .then(res => res.json())
+    .then((data) => {
+        loader.style.display = 'none';
+
+        if (data.status === 200) {
+
+            displaySuccess('Your password has been updated')
+            
+            setTimeout(function(){
+                 window.location.replace('signup.html?tab=2')
+            }, 1500);
+
+        }else {
+            displayError(data.error)
         }
 
     })
